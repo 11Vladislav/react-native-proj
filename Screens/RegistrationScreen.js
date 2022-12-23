@@ -141,15 +141,16 @@ if (!isReady) {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff",
+    flex: 1,
+    backgroundColor: "#fff",
     },
 
     image: {
         flex: 1,
         resizeMode: "cover",
         justifyContent: "flex-end",
-         alignItems: "center",
+        alignItems: "center",
+
    },
     input: {
         borderWidth: 1,
