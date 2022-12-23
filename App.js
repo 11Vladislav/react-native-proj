@@ -4,6 +4,7 @@ import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen";
 
 export default function App() {
+  // const routing = useRoute(true);
   return (
     <View style={styles.container}>
       <RegistrationScreen />
