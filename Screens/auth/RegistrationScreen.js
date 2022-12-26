@@ -11,11 +11,10 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
+  Image, 
 } from "react-native";
 
-import * as Font from "expo-font";
-import AppLoading from 'expo-app-loading';
-import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 const initialState = {
   login: "",
@@ -23,19 +22,11 @@ const initialState = {
   password: "",
 };
 
-const loadFonts = async () => {
-  await Font.loadAsync({
-    "Roboto-Regular": require("./../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Bold": require("./../assets/fonts/Roboto-Bold.ttf"),
-  });
-};
-
-
-export default function RegistrationScreen() {
+export default function RegistrationScreen({ navigation }) {
   console.log(Platform.OS);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setstate] = useState(initialState);
-  const [isReady, setIsReady] = useState(false)
+
 
   const [dimensions, setdimensions] = useState(
     Dimensions.get("window").width - 20 * 2
@@ -53,14 +44,6 @@ export default function RegistrationScreen() {
     };
   }, []);
 
-if (!isReady) {
-  return <AppLoading startAsync={loadFonts}
-    onFinish={() =>
-    setIsReady(true)}
-    onError={console.warn}
-  />
-}
-
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
@@ -73,15 +56,20 @@ if (!isReady) {
     <View style={styles.container}>
       <ImageBackground
         style={styles.image}
-        source={require("./../assets/images/photo-bg.jpg")}
+        source={require("../../assets/images/photo-bg.jpg")}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
             <View style={styles.wrapper}>
                 <View style={styles.picAdd}>
+                  <Image
+                      style={styles.userPic}
+                      source={require("../../assets/images/photo-user.jpg")}
+                      >
+                  </Image>
                  <TouchableOpacity style={styles.addBtn}>
-                    <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
+                    <Entypo name="cross" size={25} color="#BDBDBD"/>
                   </TouchableOpacity>   
                 </View>    
             <View style={{ ...styles.form, marginBottom: isShowKeyboard ? 20 : 100 }}>
@@ -127,9 +115,15 @@ if (!isReady) {
                 <TouchableOpacity activeOpacity={0.8}
                   style={styles.btn}
                   onPress={keyboardHide}>
-             <Text style={styles.btnTitle}>Зарегистрироваться</Text>
+             <Text style={styles.btnTitle}
+              onPress={() => navigation.navigate("PostsScreen")}
+             >Зарегистрироваться
+             </Text>
            </TouchableOpacity> 
-              <Text style={styles.redirText}>Уже есть аккаунт? Войти</Text>         
+              <Text style={styles.redirText}
+                onPress={() => navigation.navigate("Login")}>
+                Уже есть аккаунт? Войти  
+              </Text>         
             </View>          
           </View>
         </KeyboardAvoidingView>    
@@ -150,7 +144,6 @@ const styles = StyleSheet.create({
         resizeMode: "cover",
         justifyContent: "flex-end",
         alignItems: "center",
-
    },
     input: {
         borderWidth: 1,
@@ -171,6 +164,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 25,
     },
   picAdd: {
+      position: "relative",
       marginTop: -60,
       marginLeft: 128,
       alignItems: "flex-end",
@@ -179,9 +173,17 @@ const styles = StyleSheet.create({
       backgroundColor: "#F6F6F6",
       borderRadius: 16,
     },
+    userPic:{
+      borderRadius: 16,
+      width: 120,
+      height: 120,
+    },
     addBtn: {
-      marginTop: 81, 
-      marginRight: -12,
+      position: "absolute",
+      top: 81, 
+      right: -12,
+      backgroundColor: "#fff",
+      borderRadius: "50%",
     },
     form: {
          marginHorizontal: 16,
