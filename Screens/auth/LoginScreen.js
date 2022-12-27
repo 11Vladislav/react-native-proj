@@ -77,7 +77,7 @@ return (
                 <TextInput
                   style={styles.input}
                   textAlign={"center"}
-                  secureTextEntry={true}
+                  secureTextEntry={true}npm 
                   placeholder={"Пароль"}
                   placeholderTextColor={"#BDBDBD"}
                   value={state.password}        
