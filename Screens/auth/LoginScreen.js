@@ -13,26 +13,15 @@ import {
   Dimensions,
 } from "react-native";
 
-import * as Font from "expo-font";
-import AppLoading from 'expo-app-loading';
-
 const initialState = {
   email: "",
   password: "",
 };
 
-const loadFonts = async () => {
-  await Font.loadAsync({
-    "Roboto-Regular": require("./../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Bold": require("./../assets/fonts/Roboto-Bold.ttf"),
-  });
-};
-
 export default function LoginScreen() {
-    console.log(Platform.OS);
+  console.log(Platform.OS);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setstate] = useState(initialState);
-  const [isReady, setIsReady] = useState(false)
 
   const [dimensions, setdimensions] = useState(
     Dimensions.get("window").width - 20 * 2
@@ -50,14 +39,6 @@ export default function LoginScreen() {
     };
   }, []);
 
-if (!isReady) {
-  return <AppLoading startAsync={loadFonts}
-    onFinish={() =>
-    setIsReady(true)}
-    onError={console.warn}
-  />
-}
-
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
@@ -70,7 +51,7 @@ return (
     <View style={styles.container}>
       <ImageBackground
         style={styles.image}
-        source={require("./../assets/images/photo-bg.jpg")}
+        source={require("../../assets/images/photo-bg.jpg")}
         >
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height" }
@@ -106,12 +87,17 @@ return (
                       }        
                 />
           </View>
-                <TouchableOpacity activeOpacity={0.8}
+              <TouchableOpacity activeOpacity={0.8}
                   style={styles.btn}
                   onPress={keyboardHide}>
-             <Text style={styles.btnTitle}>Войти</Text>
+             <Text style={styles.btnTitle}
+              onPress={() => navigation.navigate("PostsScreen")}
+             >Войти</Text>
             </TouchableOpacity> 
-                <Text style={styles.redirText}>Нет аккаунта? Зарегистрироваться</Text>                   
+                <Text style={styles.redirText}
+                    onPress={() => navigation.navigate("Registration")}>
+                    Нет аккаунта? Зарегистрироваться
+                </Text>                   
             </View>           
           </View>
         </KeyboardAvoidingView>    
